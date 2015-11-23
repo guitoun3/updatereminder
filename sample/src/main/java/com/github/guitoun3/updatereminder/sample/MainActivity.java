@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new UpdateReminder.Builder(this)
-                .setBaseUrl("http://meilleurescitations.apprize.fr/v2/")
+                .setBaseUrl("https://raw.githubusercontent.com/guitoun3/updatereminder/master/sample/server/")
                 .setPath("version.json")
                 .build()
                 .checkUpdate();
