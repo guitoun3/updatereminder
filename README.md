@@ -1,6 +1,8 @@
 Update Reminder for Android
 ===
 
+[ ![Download](https://api.bintray.com/packages/guitoun3/maven/update-reminder/images/download.svg) ](https://bintray.com/guitoun3/maven/update-reminder/_latestVersion)
+
 
 ![Sample](sample/images/screenshot.png "Sample")
 
