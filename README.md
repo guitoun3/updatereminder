@@ -26,3 +26,9 @@ new UpdateReminder.Builder(this)
                 .build()
                 .checkUpdate();
 ```
+
+This file must be placed on http://yourdomain.com/version.json
+
+```json
+{"enabled":true,"version":"1.0","force_update":false}
+```
