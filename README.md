@@ -13,7 +13,7 @@ Update Reminder for Android
 
 ```groovy
 dependencies {
-    compile 'com.github.guitoun3:update-reminder:1.0.0'
+    compile 'com.github.guitoun3:update-reminder:1.1.0'
 }
 ```
 
