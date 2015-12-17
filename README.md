@@ -13,7 +13,7 @@ Update Reminder for Android
 
 ```groovy
 dependencies {
-    compile 'com.github.guitoun3:update-reminder:1.1.0'
+    compile 'com.github.guitoun3:update-reminder:1.2.0'
 }
 ```
 
@@ -22,13 +22,22 @@ dependencies {
 ```java
 new UpdateReminder.Builder(this)
                 .setBaseUrl("http://yourdomain.com/")
-                .setPath("version.json")
+                .setPath("config.json")
                 .build()
                 .checkUpdate();
 ```
 
-This file must be placed on http://yourdomain.com/version.json
+This file must be placed on http://yourdomain.com/config.json
 
 ```json
-{"enabled":true,"version":"1.0","force_update":false}
+{
+  "update_reminder": {
+    "enabled": true,
+    "versionCode": "3",
+    "force_update": false,
+    "message": "Your custom message for users"
+  },
+  "your_config_key1": "12",
+  "your_other_config_stuff": "value"
+}
 ```
