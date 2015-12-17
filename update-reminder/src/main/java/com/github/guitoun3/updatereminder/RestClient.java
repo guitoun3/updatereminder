@@ -5,11 +5,11 @@ import retrofit.Retrofit;
 
 public class RestClient {
 
-    private static IApiMethods CLIENT = null;
+    private static UpdateReminder.ApiMethods CLIENT = null;
 
     private RestClient() {}
 
-    public static IApiMethods getInstance(String baseUrl) {
+    public static UpdateReminder.ApiMethods getInstance(String baseUrl) {
 
         if (CLIENT == null) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -17,7 +17,7 @@ public class RestClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            CLIENT = retrofit.create(IApiMethods.class);
+            CLIENT = retrofit.create(UpdateReminder.ApiMethods.class);
         }
 
         return CLIENT;

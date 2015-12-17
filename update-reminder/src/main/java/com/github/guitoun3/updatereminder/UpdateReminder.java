@@ -12,22 +12,30 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.http.GET;
+import retrofit.http.Url;
 
 public class UpdateReminder implements Callback<ApiResult> {
 
     private final static String TAG = "UpdateReminder";
 
     private Context mContext;
-    private String mCurrentVersion;
+    private int mCurrentVersion;
     private String mBaseUrl;
     private String mPath;
     private Boolean mDebug = false;
+
+    public interface ApiMethods {
+        @GET
+        Call<ApiResult> checkUpdate(@Url String url);
+    }
+
 
     private UpdateReminder(Context context) {
         mContext = context;
 
         try {
-            mCurrentVersion = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+            mCurrentVersion = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             if (mDebug) {
                 Log.d(TAG, e.getMessage());
@@ -53,12 +61,16 @@ public class UpdateReminder implements Callback<ApiResult> {
         if (response.isSuccess()) {
             ApiResult result = response.body();
 
-            if (mDebug) {
-                Log.d(TAG, result.toString());
-            }
+            if (result != null) {
+                if (mDebug) {
+                    Log.d(TAG, result.toString());
+                }
 
-            if (result.enabled && !mCurrentVersion.equals(result.version)) {
-                showDialog(result.force_update);
+                Integer remoteVersionCode = result.getVersionCode();
+
+                if (result.enabled() && remoteVersionCode != null && remoteVersionCode > mCurrentVersion) {
+                    showDialog(result.forceUpdate(), result.getMessage());
+                }
             }
         }
     }
@@ -71,13 +83,18 @@ public class UpdateReminder implements Callback<ApiResult> {
     }
 
 
-    private void showDialog(Boolean forceUpdate) {
+    private void showDialog(Boolean forceUpdate, String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
 
         alertDialogBuilder.setTitle(mContext.getString(R.string.updatereminder_title));
 
+        String finalMessage = mContext.getString(R.string.updatereminder_message);
+        if (message != null && !message.isEmpty()) {
+            finalMessage += "\n\n" + message;
+        }
+
         alertDialogBuilder
-                .setMessage(mContext.getString(R.string.updatereminder_message))
+                .setMessage(finalMessage)
                 .setCancelable(false)
                 .setPositiveButton(mContext.getString(R.string.updatereminder_update_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
