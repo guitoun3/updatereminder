@@ -1,5 +1,10 @@
 {
-  "enabled": true,
-  "version": "2.0",
-  "force_update": false
+  "update_reminder": {
+    "enabled": true,
+    "versionCode": "3",
+    "force_update": false,
+    "message": "Version 1.2.3:\n- Choose your theme\n- Bug fix"
+  },
+  "your_config_key1": "12",
+  "your_other_config_stuff": "value"
 }
